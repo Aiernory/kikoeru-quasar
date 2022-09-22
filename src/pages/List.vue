@@ -57,6 +57,8 @@ export default {
       switch (this.restrict) {
         case 'circles':
           return 'circleId'
+        case 'series':
+          return 'seriesId'
         case 'tags':
           return 'tagId'
         case 'vas':
@@ -78,7 +80,7 @@ export default {
   },
 
   methods: {
-    requestList () { 
+    requestList () {
       this.$axios.get(this.url)
         .then((response) => {
           this.items = response.data.concat()

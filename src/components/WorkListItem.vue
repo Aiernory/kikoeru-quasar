@@ -18,7 +18,9 @@
           <router-link :to="`/works?circleId=${metadata.circle.id}`" class="col-auto text-grey">
             {{ metadata.circle.name }}
           </router-link>
-
+          <router-link :to="`/works?seriesId=${metadata.series.id}`" class="col-auto text-grey">
+            {{ metadata.series.name }}
+          </router-link>
           <span class="col-auto">/</span>
 
           <router-link
@@ -45,7 +47,7 @@
         </div>
       </q-item-label>
     </q-item-section>
-  </q-item>   
+  </q-item>
 </template>
 
 <script>

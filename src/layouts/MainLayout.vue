@@ -200,6 +200,11 @@ export default {
           path: '/circles'
         },
         {
+          title: '系列',
+          icon: 'group',
+          path: '/series'
+        },
+        {
           title: '标签',
           icon: 'label',
           path: '/tags'

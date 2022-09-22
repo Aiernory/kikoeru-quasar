@@ -67,6 +67,11 @@ const routes = [
         component: List
       },
       {
+        path: 'series',
+        props: { restrict: "series" },
+        component: List
+      },
+      {
         path: 'tags',
         props: { restrict: "tags" },
         component: List

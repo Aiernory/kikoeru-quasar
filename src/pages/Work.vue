@@ -28,7 +28,8 @@ export default {
       workid: this.$route.params.id,
       metadata: {
         id: parseInt(this.$route.params.id),
-        circle: {}
+        circle: {},
+        series: {}
       },
       tree: []
     }

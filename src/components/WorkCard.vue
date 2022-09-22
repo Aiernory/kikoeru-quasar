@@ -21,6 +21,13 @@
         </router-link>
       </div>
 
+      <!-- 系列 -->
+      <div class="q-ml-sm q-mt-sm q-mb-xs text-subtitle1 text-weight-regular ellipsis">
+        <router-link :to="`/works?seriesId=${metadata.series.id}`" class="text-grey">
+          {{ metadata.series.name }}
+        </router-link>
+      </div>
+
       <!-- 评价&评论 -->
       <div v-show="metadata.title" class="row items-center">
         <!-- 评价 -->

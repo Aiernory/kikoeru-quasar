@@ -225,6 +225,8 @@ export default {
       const query = this.$route.query
       if (query.circleId) {
         return `/api/circles/${this.$route.query.circleId}/works`
+      } else if (query.seriesId) {
+        return `/api/series/${this.$route.query.seriesId}/works`
       } else if (query.tagId) {
         return `/api/tags/${this.$route.query.tagId}/works`
       } else if (query.vaId) {
@@ -309,11 +311,14 @@ export default {
     },
 
     refreshPageTitle () {
-      if (this.$route.query.circleId || this.$route.query.tagId || this.$route.query.vaId) {
+      if (this.$route.query.circleId || this.$route.query.seriesId || this.$route.query.tagId || this.$route.query.vaId) {
         let url = '', restrict = ''
         if (this.$route.query.circleId) {
           restrict = 'circles'
           url = `/api/${restrict}/${this.$route.query.circleId}`
+        } else if (this.$route.query.seriesId) {
+          restrict = 'series'
+          url = `/api/${restrict}/${this.$route.query.seriesId}`
         } else if (this.$route.query.tagId) {
           restrict = 'tags'
           url = `/api/${restrict}/${this.$route.query.tagId}`
@@ -336,6 +341,8 @@ export default {
                 break
               case 'circles':
                 pageTitle = 'Works by '
+              case 'circles':
+                pageTitle = 'Works series by '
                 break
             }
             pageTitle += name || ''

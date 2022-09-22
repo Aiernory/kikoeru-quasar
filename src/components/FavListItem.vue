@@ -1,6 +1,6 @@
 <template>
   <q-item clickable class="row bg-white">
-      <q-item-section class="col-auto" top> 
+      <q-item-section class="col-auto" top>
         <router-link :to="`/work/${metadata.id}`">
           <q-img transition="fade" :src="coverUrl" style="height: 120px; width: 160px;" />
         </router-link>
@@ -17,6 +17,9 @@
         <div class="row q-gutter-x-sm col-auto" >
           <router-link :to="`/works?circleId=${metadata.circle.id}`" class="col-auto text-grey">
             {{metadata.circle.name}}
+          </router-link>
+          <router-link :to="`/works?seriesId=${metadata.series.id}`" class="col-auto text-grey">
+            {{metadata.series.name}}
           </router-link>
 
           <span class="col-auto">/</span>

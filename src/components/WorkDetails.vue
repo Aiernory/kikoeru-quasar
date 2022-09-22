@@ -20,6 +20,13 @@
           </router-link>
         </div>
 
+        <!-- 系列名 -->
+        <div class="text-subtitle1 text-weight-regular">
+          <router-link :to="`/works?seriesId=${metadata.series.id}`" class="text-grey">
+            {{metadata.series.name}}
+          </router-link>
+        </div>
+
         <!-- 评价&评论 -->
         <div class="row items-center q-gutter-xs">
           <!-- 评价 -->
