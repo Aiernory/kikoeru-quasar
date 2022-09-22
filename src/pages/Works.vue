@@ -341,7 +341,8 @@ export default {
                 break
               case 'circles':
                 pageTitle = 'Works by '
-              case 'circles':
+                break
+              case 'series':
                 pageTitle = 'Works series by '
                 break
             }
