@@ -201,7 +201,7 @@ export default {
         },
         {
           title: '系列',
-          icon: 'series',
+          icon: 'share',
           path: '/series'
         },
         {
