@@ -55,11 +55,22 @@
 
 <script>
 import NotifyMixin from '../mixins/Notification.js'
-
+import PlayerBar from 'components/PlayerBar'
+import AudioPlayer from 'components/AudioPlayer'
+import LyricsBar from 'components/LyricsBar'
+import SleepMode from 'components/SleepMode'
 export default {
   name: 'DashboardLayout',
 
   mixins: [NotifyMixin],
+
+  components: {
+    PlayerBar,
+    AudioPlayer,
+    LyricsBar,
+    SleepMode
+  },
+
 
   data () {
     return {
