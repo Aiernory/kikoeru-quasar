@@ -43,7 +43,7 @@ const mutations = {
 
     if (payload.resetPlaying) {
       state.playing = true
-    }    
+    }
   },
   EMPTY_QUEUE: (state) => {
     state.playing = false
@@ -61,7 +61,7 @@ const mutations = {
       state.queueIndex = 0
     } else if (index < state.queueIndex) {
       state.queueIndex -= 1
-    } 
+    }
   },
 
 
@@ -106,11 +106,24 @@ const mutations = {
     state.muted = !state.muted
   },
 
-  SET_VOLUME: (state, val) => {
+  SET_VOLUME_FINAL: (state) => {
+
+    let factor = (state.volumeWork - 0.5) * 20;
+    state.volume = factor > 0 ? state.volumeAll * factor : state.volumeAll / factor
+  },
+  SET_VOLUME_ALL: (state, val) => {
     if (val < 0 || val > 1) {
       return
     }
-    state.volume = val
+    state.volumeAll = val
+    state.SET_VOLUME_FINAL()
+  },
+  SET_VOLUME_WORK: (state, val) => {
+    if (val < 0 || val > 10) {
+      return
+    }
+    state.volumeWork = val
+    state.SET_VOLUME_FINAL()
   },
   SET_REWIND_SEEK_TIME: (state, value) => {
     state.rewindSeekTime = value

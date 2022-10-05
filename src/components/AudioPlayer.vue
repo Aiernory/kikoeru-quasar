@@ -18,7 +18,7 @@
                   隐藏封面按钮
                 </q-item-section>
               </q-item>
-              
+
               <q-item clickable v-ripple @click="swapSeekButton = !swapSeekButton">
                 <q-item-section avatar>
                   <q-icon :name="swapSeekButton ? 'done' : ''" />
@@ -27,7 +27,7 @@
                   交换进度按钮与切换按钮
                 </q-item-section>
               </q-item>
-              
+
               <q-item clickable v-ripple @click="openWorkDetail()" v-close-popup>
                 <q-item-section avatar>
                   <!-- placeholder -->
@@ -75,9 +75,9 @@
 
         <!-- 音量控件 -->
         <!-- HTML5 volume in iOS is read-only -->
-        <div class="row items-center q-mx-lg" style="height: 50px" v-if="!$q.platform.is.ios">
+        <div class="row items-center q-mx-lg" style="height: 30px" v-if="!$q.platform.is.ios">
           <q-icon name="volume_down" size="sm" class="col-auto" />
-          <vue-slider 
+          <vue-slider
             v-model="volume"
             :min="0"
             :max="1"
@@ -89,6 +89,20 @@
           />
           <q-icon name="volume_up" size="sm" class="col-auto" />
         </div>
+
+        <div class="row items-center q-mx-lg" style="height: 30px" v-if="!$q.platform.is.ios">
+          <vue-slider
+            v-model="volumeWork"
+            :min="0"
+            :max="1"
+            :interval="0.01"
+            :dragOnClick="true"
+            :contained="true"
+            tooltip="none"
+            class="col"
+          />
+        </div>
+
       </q-card>
     </q-slide-transition>
 
@@ -102,7 +116,7 @@
           <q-space />
           <q-btn dense round size="md" icon="delete_forever" color="red" @click="emptyQueue()" style="height: 35px; width: 35px;" class="col-auto" />
         </div>
-        
+
         <q-separator />
 
         <!-- 音频文件列表 -->
@@ -222,7 +236,18 @@ export default {
         return this.$store.state.AudioPlayer.volume
       },
       set (val) {
-        this.SET_VOLUME(val)
+        this.SET_VOLUME_ALL(val)
+      }
+    },
+
+    volumeWork: {
+      get () {
+        return this.$store.state.AudioPlayer.volumeWork
+      },
+      set (val) {
+        // todo rxq 修改数据库
+
+        this.SET_VOLUME_WORK(val)
       }
     },
 
@@ -286,7 +311,7 @@ export default {
       'rewindSeekTime',
       'forwardSeekTime'
     ]),
-    
+
     ...mapGetters('AudioPlayer', [
       'currentPlayingFile'
     ])
@@ -299,7 +324,8 @@ export default {
       nextTrack: 'NEXT_TRACK',
       previousTrack: 'PREVIOUS_TRACK',
       changePlayMode: 'CHANGE_PLAY_MODE',
-      setVolume: 'SET_VOLUME',
+      setVolume: 'SET_VOLUME_ALL',
+      setVolumeWork: 'SET_VOLUME_WORK',
       rewind: 'SET_REWIND_SEEK_MODE',
       forward: 'SET_FORWARD_SEEK_MODE'
     }),
@@ -308,7 +334,8 @@ export default {
       'SET_QUEUE',
       'REMOVE_FROM_QUEUE',
       'EMPTY_QUEUE',
-      'SET_VOLUME'
+      'SET_VOLUME_ALL',
+      'SET_VOLUME_WORK'
     ]),
 
     formatSeconds (seconds) {
@@ -353,7 +380,7 @@ export default {
       } else {
         index = this.queueIndex
       }
-   
+
       this.SET_QUEUE({
         queue: this.queueCopy.concat(),
         index: index,

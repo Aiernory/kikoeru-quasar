@@ -41,6 +41,11 @@ export default {
     source () {
       // 从 LocalStorage 中读取 token
       const token = this.$q.localStorage.getItem('jwt-token') || ''
+      // 定制的声音
+      let volumeWork = this.currentPlayingFile.volumeWork;
+      alert('先set ' + volumeWork)
+      this.SET_VOLUME_WORK(volumeWork)
+
       // New API
       if (this.currentPlayingFile.mediaStreamUrl) {
         return `${this.currentPlayingFile.mediaStreamUrl}?token=${token}`
@@ -59,6 +64,7 @@ export default {
       'playMode',
       'muted',
       'volume',
+      'volumeWork',
       'sleepTime',
       'sleepMode',
       'rewindSeekTime',
@@ -104,6 +110,16 @@ export default {
       // 调节音量
       this.player.volume = val
     },
+    volumeWork (val) {
+      // 屏蔽非法数值
+      if (val < 0 || val > 1) {
+        return
+      }
+
+      // 调节音量
+      this.player.volumeWork = val
+    },
+
     rewindSeekMode(rewind) {
       if (rewind) {
         this.player.rewind(this.rewindSeekTime);
@@ -151,7 +167,8 @@ export default {
       'SET_TRACK',
       'NEXT_TRACK',
       'SET_CURRENT_LYRIC',
-      'SET_VOLUME',
+      'SET_VOLUME_ALL',
+      'SET_VOLUME_WORK',
       'CLEAR_SLEEP_MODE',
       'SET_REWIND_SEEK_MODE',
       'SET_FORWARD_SEEK_MODE'
@@ -287,10 +304,10 @@ export default {
         })
     },
   },
-
   mounted () {
-    // 初始化音量
-    this.SET_VOLUME(this.player.volume);
+    // 这俩是展示的， 还得找找实际的音量控制地方
+    this.SET_VOLUME_WORK(this.currentPlayingFile.volumeWork);
+    this.SET_VOLUME_ALL(this.player.volume);
     this.initLrcObj();
     if (this.source) {
       this.loadLrcFile();
