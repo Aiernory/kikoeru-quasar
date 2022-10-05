@@ -47,9 +47,16 @@
       </div>
     </q-drawer>
 
+    <SleepMode v-model="showTimer" />
+
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <q-footer class="q-pa-none">
+      <LyricsBar />
+      <PlayerBar />
+    </q-footer>
   </q-layout>
 </template>
 
