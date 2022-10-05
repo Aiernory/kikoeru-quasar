@@ -5,6 +5,8 @@
         <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
         <q-toolbar-title>仪表盘</q-toolbar-title>
       </q-toolbar>
+
+      <AudioPlayer />
     </q-header>
 
     <q-drawer
@@ -23,7 +25,7 @@
     >
       <div class="column justify-between fit">
         <q-list padding class="col-auto">
-          <q-item 
+          <q-item
             clickable
             v-ripple
             exact
@@ -84,7 +86,7 @@ export default {
           icon: 'settings',
           path: '/admin/advanced'
         },
-        
+
         {
           title: '回到主页',
           icon: 'home',
@@ -114,7 +116,7 @@ export default {
     // 从 LocalStorage 中读取 token
     const token = this.$q.localStorage.getItem('jwt-token') || ''
     this.$socket.io.opts.query.auth_token = token
-    
+
     if (!this.$socket.connected) {
       this.$socket.open()
     }
