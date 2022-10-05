@@ -20,31 +20,25 @@ function prefixRoutes(prefix, routes) {
 
 const routes = [
   {
-    path: '/admin',
-    component: MainLayout,
-    children: [
-      {
-        path: '',
-        component: Folders
-      },
-      {
-        path: 'scanner',
-        component: Scanner
-      },
-      {
-        path: 'advanced',
-        component: Advanced
-      },
-      {
-        path: 'usermanage',
-        component: UserManage
-      }
-    ]
-  },
-  {
     path: '/',
     component: MainLayout,
     children: [
+      {
+        path: 'admin/',
+        component: Folders
+      },
+      {
+        path: 'admin/scanner',
+        component: Scanner
+      },
+      {
+        path: 'admin/advanced',
+        component: Advanced
+      },
+      {
+        path: 'admin/usermanage',
+        component: UserManage
+      },
       {
         path: '',
         redirect: {

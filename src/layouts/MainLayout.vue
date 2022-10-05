@@ -284,7 +284,7 @@ export default {
     if (!this.$socket.connected) {
       this.$socket.open()
     }
-  }
+  },
 
   computed: {
     isNotAtHomePage () {
