@@ -1,5 +1,4 @@
 import MainLayout from 'layouts/MainLayout'
-import DashboardLayout from 'layouts/DashboardLayout'
 
 import Works from 'pages/Works'
 import Work from 'pages/Work'
@@ -22,7 +21,7 @@ function prefixRoutes(prefix, routes) {
 const routes = [
   {
     path: '/admin',
-    component: DashboardLayout,
+    component: MainLayout,
     children: [
       {
         path: '',
