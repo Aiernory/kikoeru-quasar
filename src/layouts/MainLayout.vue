@@ -215,10 +215,25 @@ export default {
           path: '/vas'
         },
         {
-          title: '设定',
-          icon: 'tune',
+          title: '高级设置',
+          icon: 'settings',
+          path: '/admin/advanced'
+        },
+        {
+          title: '音声库',
+          icon: 'folder',
           path: '/admin'
         },
+        {
+          title: '扫描',
+          icon: 'youtube_searched_for',
+          path: '/admin/scanner'
+        },
+        {
+          title: '用户管理',
+          icon: 'person',
+          path: '/admin/usermanage'
+        }
       ],
       sharedConfig: {}
     }
@@ -243,6 +258,33 @@ export default {
     this.checkUpdate();
     this.readSharedConfig();
   },
+
+  sockets: {
+    success (payload) {
+      this.showSuccNotif(payload.message)
+      if (payload.auth) {
+        this.$store.commit('User/INIT', payload.user)
+        this.$store.commit('User/SET_AUTH', payload.auth)
+      }
+    },
+    error (err) {
+      this.showWarnNotif(err.message || err)
+      this.$socket.close()
+      // 验证失败，跳转到登录页面
+      this.$router.push('/login')
+    }
+  },
+
+
+  created () {
+    // 从 LocalStorage 中读取 token
+    const token = this.$q.localStorage.getItem('jwt-token') || ''
+    this.$socket.io.opts.query.auth_token = token
+
+    if (!this.$socket.connected) {
+      this.$socket.open()
+    }
+  }
 
   computed: {
     isNotAtHomePage () {
