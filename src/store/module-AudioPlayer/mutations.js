@@ -1,15 +1,15 @@
 const mutations = {
-  TOGGLE_HIDE (state) {
+  TOGGLE_HIDE(state) {
     state.hide = !state.hide
   },
 
-  PLAY (state) {
+  PLAY(state) {
     state.playing = true
   },
-  PAUSE (state) {
+  PAUSE(state) {
     state.playing = false
   },
-  TOGGLE_PLAYING (state) {
+  TOGGLE_PLAYING(state) {
     state.playing = !state.playing
   },
 
@@ -37,7 +37,7 @@ const mutations = {
     }
   },
 
-  SET_QUEUE (state, payload) {
+  SET_QUEUE(state, payload) {
     state.queue = payload.queue
     state.queueIndex = payload.index
 
@@ -65,11 +65,11 @@ const mutations = {
   },
 
 
-  SET_DURATION (state, second) {
+  SET_DURATION(state, second) {
     state.duration = second
   },
 
-  SET_CURRENT_TIME (state, second) {
+  SET_CURRENT_TIME(state, second) {
     state.currentTime = second
   },
 
@@ -105,25 +105,64 @@ const mutations = {
   TOGGLE_MUTED: (state) => {
     state.muted = !state.muted
   },
+  SET_VOLUME: (state, val) => {
+    if (val < 0 || val > 10) {
+      return
+    }
+    state.volume = val
+    console.log('音量 SET_VOLUME  debug start')
+    console.log('val ', val)
+    console.log('volumeWork ', state.volumeWork)
+    console.log('volumeAll ', state.volumeAll)
+    console.log('volume ', state.volume)
 
-  SET_VOLUME_FINAL: (state) => {
-
-    let factor = (state.volumeWork - 0.5) * 20;
-    state.volume = factor > 0 ? state.volumeAll * factor : state.volumeAll / factor
   },
   SET_VOLUME_ALL: (state, val) => {
     if (val < 0 || val > 1) {
       return
     }
     state.volumeAll = val
-    state.SET_VOLUME_FINAL()
+    if (state.volumeWork && state.volumeAll) {
+      let factor = (state.volumeWork - 0.5) * 18;
+      if (factor >= 0) {
+        state.volume = state.volumeAll * (1 + factor)
+      } else {
+        state.volume = state.volumeAll / (1 - factor)
+      }
+
+      console.log('音量 SET_VOLUME_ALL  debug start')
+      console.log('val ', val)
+      console.log('volumeWork ', state.volumeWork)
+      console.log('volumeAll ', state.volumeAll)
+      console.log('volume ', state.volume)
+    } else {
+      console.log('音量 SET_VOLUME_ALL  debug start 不合法数值')
+      console.log('state.volumeWork ', state.volumeWork)
+      console.log('state.volumeAll ', state.volumeAll)
+    }
   },
   SET_VOLUME_WORK: (state, val) => {
     if (val < 0 || val > 10) {
       return
     }
     state.volumeWork = val
-    state.SET_VOLUME_FINAL()
+    if (state.volumeWork && state.volumeAll) {
+      let factor = (state.volumeWork - 0.5) * 18;
+      if (factor >= 0) {
+        state.volume = state.volumeAll * (1 + factor)
+      } else {
+        state.volume = state.volumeAll / (1 - factor)
+      }
+
+      console.log('val ', val)
+      console.log('volumeWork ', state.volumeWork)
+      console.log('volumeAll ', state.volumeAll)
+      console.log('volume ', state.volume)
+    }else {
+      console.log('音量 SET_VOLUME_ALL  debug start 不合法数值')
+      console.log('state.volumeWork ', state.volumeWork)
+      console.log('state.volumeAll ', state.volumeAll)
+    }
   },
   SET_REWIND_SEEK_TIME: (state, value) => {
     state.rewindSeekTime = value

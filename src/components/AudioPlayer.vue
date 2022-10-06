@@ -78,7 +78,7 @@
         <div class="row items-center q-mx-lg" style="height: 30px" v-if="!$q.platform.is.ios">
           <q-icon name="volume_down" size="sm" class="col-auto" />
           <vue-slider
-            v-model="volume"
+            v-model="volumeAll"
             :min="0"
             :max="1"
             :interval="0.01"
@@ -231,22 +231,38 @@ export default {
       return hash ? `/work/${hash.split('/')[0]}` : ""
     },
 
+    //
     volume: {
       get () {
+        console.log("获取 player 的 volume",this.$store.state.AudioPlayer.volume)
         return this.$store.state.AudioPlayer.volume
       },
       set (val) {
+        console.log("设定 player 的 volume = ", this.$store.state.AudioPlayer.volume ,"   新值：  ",val)
+        this.SET_VOLUME(val)
+      }
+    },
+
+    volumeAll: {
+      get () {
+        console.log("获取 player 的 volumeAll",this.$store.state.AudioPlayer.volumeAll)
+        return this.$store.state.AudioPlayer.volumeAll
+      },
+      set (val) {
+        console.log("设定 player 的 volumeAll = ", this.$store.state.AudioPlayer.volumeAll ,"   新值：  ",val)
         this.SET_VOLUME_ALL(val)
       }
     },
 
     volumeWork: {
       get () {
+        console.log("获取 player 的 volumeWork",this.$store.state.AudioPlayer.volumeWork)
         return this.$store.state.AudioPlayer.volumeWork
       },
       set (val) {
         // todo rxq 修改数据库
 
+        console.log("设定 player 的 volumeWork = ", this.$store.state.AudioPlayer.volumeWork ,"   新值：  ",val)
         this.SET_VOLUME_WORK(val)
       }
     },
@@ -324,7 +340,8 @@ export default {
       nextTrack: 'NEXT_TRACK',
       previousTrack: 'PREVIOUS_TRACK',
       changePlayMode: 'CHANGE_PLAY_MODE',
-      setVolume: 'SET_VOLUME_ALL',
+      setVolume: 'SET_VOLUME',
+      setVolumeAll: 'SET_VOLUME_ALL',
       setVolumeWork: 'SET_VOLUME_WORK',
       rewind: 'SET_REWIND_SEEK_MODE',
       forward: 'SET_FORWARD_SEEK_MODE'
@@ -334,6 +351,7 @@ export default {
       'SET_QUEUE',
       'REMOVE_FROM_QUEUE',
       'EMPTY_QUEUE',
+      'SET_VOLUME',
       'SET_VOLUME_ALL',
       'SET_VOLUME_WORK'
     ]),
