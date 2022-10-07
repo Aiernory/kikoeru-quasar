@@ -59,8 +59,8 @@ export default {
       'playMode',
       'muted',
       'volume',
-      'volumeAll',
-      'volumeWork',
+      // 'volumeAll',
+      // 'volumeWork',
       'sleepTime',
       'sleepMode',
       'rewindSeekTime',
@@ -96,33 +96,29 @@ export default {
       // 切换静音状态
       this.player.muted = flag
     },
+    // 真正影响音量的地方   这个应该是个后置相应
+    // volume setting last third
     volume (val) {
-      // 屏蔽非法数值
-      if (val < 0 || val > 1) {
+      console.log('element  volume 真实设定  旧值 ' +this.player.volume+ '   新值：' +val)
+      if (val < 0 || val > 10) {
         return
       }
-
-      // 调节音量
       this.player.volume = val
     },
-    volumeAll (val) {
-      // 屏蔽非法数值
-      if (val < 0 || val > 1) {
-        return
-      }
-
-      // 调节音量
-      this.player.volumeAll = val
-    },
-    volumeWork (val) {
-      // 屏蔽非法数值
-      if (val < 0 || val > 1) {
-        return
-      }
-
-      // 调节音量
-      this.player.volumeWork = val
-    },
+    // volumeAll (val) {
+    //   console.log('element  volumeAll 真实设定  旧值 ' +this.player.volumeAll+ '   新值：' +val)
+    //   if (val < 0 || val > 100) {
+    //     return
+    //   }
+    //   this.player.volumeAll = val
+    // },
+    // volumeWork (val) {
+    //   console.log('element 真实设定 volumeWork 旧值 ' +this.player.volumeWork+ '   新值：' +val)
+    //   if (val < -9 || val > 9) {
+    //     return
+    //   }
+    //   this.player.volumeWork = val
+    // },
 
     rewindSeekMode(rewind) {
       if (rewind) {
@@ -171,9 +167,9 @@ export default {
       'SET_TRACK',
       'NEXT_TRACK',
       'SET_CURRENT_LYRIC',
-      'SET_VOLUME',
-      'SET_VOLUME_ALL',
-      'SET_VOLUME_WORK',
+      // 'SET_VOLUME', 无影响
+      // 'SET_VOLUME_ALL',
+      // 'SET_VOLUME_WORK',
       'CLEAR_SLEEP_MODE',
       'SET_REWIND_SEEK_MODE',
       'SET_FORWARD_SEEK_MODE'
@@ -312,7 +308,7 @@ export default {
   mounted () {
     console.log("element 的 mounted 方法调用")
     // 这俩是展示的， 还得找找实际的音量控制地方
-    this.SET_VOLUME(this.player.volume);
+    // this.AudioPlayer.SET_VOLUME(this.player.volume); // 报错
     this.initLrcObj();
     if (this.source) {
       this.loadLrcFile();
